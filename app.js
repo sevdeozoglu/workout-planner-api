@@ -2,6 +2,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import workoutRoutes from './routes/workoutRoutes.js'; // Import the routes file
+import errorHandler from './middleware/errorHandler.js';
 
 // Create an instance of an Express application
 const app = express();
@@ -14,6 +15,9 @@ app.use(express.json());
 
 // Mount the routes under /api/workouts
 app.use('/api/workouts', workoutRoutes);
+
+// Error handling middleware should be added last.
+app.use(errorHandler);
 
 // Export the Express application instance so it can be imported and used in other parts of the project (e.g., server.js)
 export default app;

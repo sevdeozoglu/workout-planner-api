@@ -3,6 +3,12 @@ import mongoose from 'mongoose';
 
 // Define a schema for the Workout model
 const WorkoutSchema = new mongoose.Schema({
+    // Associate this workout with a user
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
   // The name of the workout (e.g., "Leg Day")
   name: {
     type: String,

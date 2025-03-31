@@ -1,6 +1,5 @@
 // Import Express and create a new router
 import express from 'express';
-const router = express.Router();
 
 // Import the controller functions
 import {
@@ -10,8 +9,13 @@ import {
   updateWorkout,
   deleteWorkout,
 } from '../controllers/workoutController.js';
+import { AuthGuard } from '../middleware/authMiddleware.js';
 
+const router = express.Router();
 // Define the endpoints:
+
+// Apply AuthGuard so only authenticated users can access these endpoints
+router.use(AuthGuard);
 
 // GET /api/workouts - Retrieve all workouts
 router.get('/', getWorkouts);

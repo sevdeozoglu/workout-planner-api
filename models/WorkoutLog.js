@@ -7,6 +7,12 @@ const WorkoutLogSchema = new mongoose.Schema({
     ref: 'Workout',
     required: true,
   },
+  // Reference to the User who performed the workout ✅
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
   // The date/time when the workout was performed; defaults to current date/time
   date: {
     type: Date,

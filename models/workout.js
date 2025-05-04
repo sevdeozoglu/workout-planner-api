@@ -18,13 +18,13 @@ const WorkoutSchema = new mongoose.Schema({
   exercises: [
     {
       // The name of the exercise (e.g., "Squat")
-      name: { type: String },
+      name: { type: String, required: true },
       // The number of sets for this exercise
-      sets: { type: Number },
+      sets: { type: Number, required: true },
       // The number of repetitions per set
-      reps: { type: Number },
+      reps: { type: Number, required: true },
       // Rest time between sets in seconds
-      restTime: { type: Number },
+      restTime: { type: Number, required: true },
     }
   ],
   // The date when the workout was created; defaults to the current date/time

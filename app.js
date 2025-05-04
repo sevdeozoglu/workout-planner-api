@@ -5,6 +5,7 @@ import passport from 'passport';
 import workoutRoutes from './routes/workoutRoutes.js'; // Import the routes file
 import workoutLogRoutes from './routes/workoutLogRoutes.js'; // Import the workout log routes
 import authRoutes from './routes/authRoutes.js'; // Import authentication routes
+import fitnessGoalRoutes from './routes/fitnessGoalRoutes.js';
 import errorHandler from './middleware/errorHandler.js';
 import configurePassport from './config/passport.js'; // Import passport configuration
 
@@ -26,6 +27,7 @@ configurePassport(passport);
 app.use('/api/workouts', workoutRoutes);
 app.use('/api/workout-logs', workoutLogRoutes); // New endpoint for workout logs
 app.use('/api/auth', authRoutes); // Authentication endpoints
+app.use('/api/fitness-goals', fitnessGoalRoutes);
 
 // Error handling middleware should be added last.
 app.use(errorHandler);

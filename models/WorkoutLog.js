@@ -23,6 +23,11 @@ const WorkoutLogSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  //Intensity of the workout
+  intensity: { 
+    type: String, 
+    enum: ['low', 'medium', 'high'] 
+  },
   // Optional notes about the workout session
   notes: {
     type: String,

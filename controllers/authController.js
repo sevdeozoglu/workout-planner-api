@@ -47,3 +47,18 @@ export const login = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+// Controller to return current logged-in user info
+export const getProfileInfo = async (req, res) => {
+  try {
+    const user = req.user;
+    res.status(200).json({
+      id: user.user_id,
+      username: user.username,
+      email: user.email,
+      createdAt: user.createdAt,
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch profile info' });
+  }
+};

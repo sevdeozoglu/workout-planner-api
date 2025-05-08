@@ -15,6 +15,8 @@ import {
 // Importing the AuthGuard middleware to protect routes
 import { AuthGuard } from '../middleware/authMiddleware.js';
 
+import { getWorkoutSummary } from '../controllers/workoutLogController.js';
+
 // Creating a new router instance
 const router = express.Router();
 
@@ -29,6 +31,8 @@ router.get('/', getWorkoutLogs);
 // @route   POST /api/workout-logs
 // @desc    Create a new workout log for the logged-in user
 router.post('/', createWorkoutLog);
+
+router.get('/summary', getWorkoutSummary);
 
 // @route   GET /api/workout-logs/:id
 // @desc    Get a single workout log by ID (only if it belongs to the user)

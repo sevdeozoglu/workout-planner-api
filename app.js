@@ -9,6 +9,7 @@ import fitnessGoalRoutes from './routes/fitnessGoalRoutes.js';
 import errorHandler from './middleware/errorHandler.js';
 import configurePassport from './config/passport.js'; // Import passport configuration
 import healthRoutes from './routes/healthRoutes.js';
+import dashboardRoutes from './routes/dashboardRoutes.js';
 
 // Create an instance of an Express application
 const app = express();
@@ -30,6 +31,7 @@ app.use('/api/workout-logs', workoutLogRoutes); // New endpoint for workout logs
 app.use('/api/auth', authRoutes); // Authentication endpoints
 app.use('/api/fitness-goals', fitnessGoalRoutes); // Fitness Goals
 app.use('/api/health', healthRoutes); //Health check for Vercel Deployment
+app.use('/api/dashboard', dashboardRoutes);
 
 // Error handling middleware should be added last.
 app.use(errorHandler);

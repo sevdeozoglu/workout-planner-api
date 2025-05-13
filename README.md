@@ -51,6 +51,18 @@ The Workout Planner API is a secure and user-focused backend system built with N
 ### Error Handling
 - Global error handler returns consistent JSON responses
 
+### Input Validation
+
+All key data-entry endpoints in this API use **express-validator** to validate incoming request bodies.  
+Invalid or incomplete input results in a `400 Bad Request` response with detailed error messages.
+
+Validated endpoints include:
+
+- `POST /api/auth/register` – checks username, valid email, and password length
+- `POST /api/workouts` – validates workout name and exercise structure
+- `POST /api/workout-logs` – validates workout reference, duration, and optional notes
+- `POST /api/fitness-goals` – validates goal title and optional target date format
+
 
 ## Tech Stack
 

@@ -17,6 +17,8 @@ import { AuthGuard } from '../middleware/authMiddleware.js';
 
 import { getWorkoutSummary } from '../controllers/workoutLogController.js';
 
+import { body, validationResult } from 'express-validator';
+
 // Creating a new router instance
 const router = express.Router();
 
@@ -29,9 +31,27 @@ router.use(AuthGuard);
 router.get('/', getWorkoutLogs);
 
 // @route   POST /api/workout-logs
-// @desc    Create a new workout log for the logged-in user
-router.post('/', createWorkoutLog);
+// @desc    Create a new workout log for the user
+router.post(
+  '/',
+  [
+    body('workout').notEmpty().withMessage('Workout ID is required'),
+    body('duration').isInt({ min: 1 }).withMessage('Duration must be a positive number'),
+    body('notes').optional().isString().withMessage('Notes must be a string'),
+  ],
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
+    createWorkoutLog(req, res, next);
+  }
+);
+
+
+// @route   GET /api/workout-logs/summary
+// @desc    Get workout summary (count and total duration per workout)
 router.get('/summary', getWorkoutSummary);
 
 // @route   GET /api/workout-logs/:id

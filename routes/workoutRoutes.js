@@ -11,6 +11,7 @@ import {
 } from '../controllers/workoutController.js';
 import { AuthGuard } from '../middleware/authMiddleware.js';
 import { searchWorkouts } from '../controllers/workoutController.js';
+import { body, validationResult } from 'express-validator';
 
 const router = express.Router();
 // Define the endpoints:
@@ -21,8 +22,28 @@ router.use(AuthGuard);
 // GET /api/workouts - Retrieve all workouts
 router.get('/', getWorkouts);
 
-// POST /api/workouts - Create a new workout
-router.post('/', createWorkout);
+// @route   POST /api/workouts
+// @desc    Create a new workout with validation
+router.post(
+  '/',
+  [
+    body('name').notEmpty().withMessage('Workout name is required'),
+    body('exercises').isArray({ min: 1 }).withMessage('At least one exercise is required'),
+    body('exercises.*.name').notEmpty().withMessage('Exercise name is required'),
+    body('exercises.*.sets').isInt({ min: 1 }).withMessage('Sets must be a positive number'),
+    body('exercises.*.reps').isInt({ min: 1 }).withMessage('Reps must be a positive number'),
+    body('exercises.*.restTime').isInt({ min: 0 }).withMessage('Rest time must be a number'),
+  ],
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    // Call controller if validation passes
+    createWorkout(req, res, next);
+  }
+);
 
 // Route to search workouts by name
 router.get('/search', searchWorkouts);

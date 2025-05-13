@@ -94,3 +94,24 @@ export const deleteWorkout = async (req, res, next) => {
     next(error);
   }
 };
+
+// Controller: Search workouts by name (keyword)
+export const searchWorkouts = async (req, res, next) => {
+  try {
+    // Get the search keyword from the query string (e.g., ?q=arm)
+    const keyword = req.query.q || '';
+
+    // Find workouts that belong to the logged-in user
+    // and whose name contains the keyword
+    const workouts = await Workout.find({
+      user: req.user._id,
+      name: { $regex: keyword, $options: 'i' }
+    });
+
+    // Return the filtered workout list
+    res.status(200).json(workouts);
+  } catch (error) {
+    // Forward any errors to the global error handler
+    next(error);
+  }
+};
